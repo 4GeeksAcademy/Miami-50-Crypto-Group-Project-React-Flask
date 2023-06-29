@@ -20,3 +20,22 @@ def login():
 
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token)
+
+@api.route("/register", methods=["POST"])
+def register():
+    name = request.json.get("name")
+    email = request.json.get("email")
+    password = request.json.get("password")
+
+    if not name or not email or not password:
+        return jsonify({"msg": "Missing required fields"}), 400
+
+    existing_user = User.query.filter_by(email=email).first()
+    if existing_user:
+        return jsonify({"msg": "Email already exists"}), 409
+
+    new_user = User(name=name, email=email, password=password)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({"msg": "User registered successfully"}), 201

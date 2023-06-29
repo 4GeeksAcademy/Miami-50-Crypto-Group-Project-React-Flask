@@ -1,3 +1,6 @@
 /* 
-    General Styles used on every website (Don't Repeat Yourself)
+    General Styles
 */
+code {
+    font-family: Arial, Helvetica, sans-serif;
+}

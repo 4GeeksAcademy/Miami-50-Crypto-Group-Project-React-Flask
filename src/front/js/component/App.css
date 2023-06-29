@@ -1,0 +1,37 @@
+.App {
+    text-align: center;
+    background-image: linear-gradient(75deg, white, aliceblue, #02315e);
+}    
+
+.App-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.App-link {
+    color: aqua;
+}
+
+.auth-form-container, .login-form, .register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input {
+    margin: .75rem;
+    
+}
+
+button {
+    border: none;
+    border-radius: 5px;
+}
+
+.link-button {
+    background: none;
+    text-decoration: wavy;
+}

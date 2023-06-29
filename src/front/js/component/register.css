@@ -1,0 +1,51 @@
+.App {
+    text-align: center;
+    display:flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.auth-form-container, .login-form, .register-form {
+    padding: .25rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+    
+} 
+
+label {
+    text-align: center;
+    padding: .15rem 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+input {
+    margin: .25rem;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+    border: none;
+    background-color: aliceblue;
+    padding: 10px;
+    border-radius: 5px;
+    
+}
+.link-button {
+    background: none;
+    color: #02315e;
+    text-align: center;
+    justify-content: center;
+
+}
+
+reg-button {
+    padding: 10px;
+    background: none;
+    color: #02315e;
+}
+

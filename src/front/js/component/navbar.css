@@ -1,0 +1,35 @@
+.Logo {
+    color: rgb(244, 237, 237);
+    padding-left: 10px;
+}
+a{
+    text-decoration: none;
+}
+.navbar {
+    background-color: rgb(2, 49, 94);
+    width: 100%;
+    height: 80px;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+
+}
+.navbar .leftSide {
+    flex: 50%;
+}
+.navbar .rightSide {
+    flex: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    
+}
+.rightSide input {
+    padding-right: 25px;
+    background-color: aliceblue;
+}
+.loginButton {
+    text-align: right;
+    padding-right: 10px;
+    padding-left: 30px;
+}

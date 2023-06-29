@@ -13,7 +13,7 @@ import Navbar from "./component/navbar";
 import App from "./component/App";
 import { Login } from "./component/Login";
 import { Register } from "./component/Register";
-
+import { Passie } from "./component/Passie";
 
 
 
@@ -39,6 +39,7 @@ const Layout = () => {
 						<Route path="/App" element={<App />} />
 						<Route path="/login" element={<Login />} />
 						<Route path="/register" element={<Register />} />
+						<Route path="/passie" element={<Passie />} />
 						<Route path="/demo" element={<Demo />} />
 						<Route path="/single/:theid" element={<Single />} />
 						<Route path="*" element={<h1>Not found!</h1>} />

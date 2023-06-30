@@ -13,10 +13,10 @@ function Sidebar() {
 					<Link to="/favorites">Favorites</Link>
 				</li>
 				<li className="nav-item">
-					<Link to="/top">Top 10</Link>
+					<Link to="/top10">Top 10</Link>
 				</li>
 				<li className="nav-item">
-					<Link to="/bottom">Bottom 10</Link>
+					<Link to="/bottom10">Bottom 10</Link>
 				</li>
 			</ul>
 		</div>

@@ -53,7 +53,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const resp = await fetch("http://127.0.0.1:3001/api/token", opt);
 
           if (resp.status !== 200) {
-            alert("An error has been found");
+            alert("Invalid Email or Password");
             return false;
           }
 

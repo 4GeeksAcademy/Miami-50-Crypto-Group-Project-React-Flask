@@ -11,10 +11,16 @@ export const Login = () => {
   const { store, actions } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const history = useNavigate();
 
-  const clickHandler = () => {
-    actions.login(email, password);
+  const clickHandler = (e) => {
+    e.preventDefault();
+    if (email && password) {
+      actions.login(email, password);
+    } else {
+      setErrorMessage("Invalid username or password.");
+    }
   };
 
   useEffect(() => {
@@ -36,7 +42,7 @@ export const Login = () => {
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              defaultValue={email}
+              
               type="email"
               placeholder="your_email@cryptotart.com"
               id="email"

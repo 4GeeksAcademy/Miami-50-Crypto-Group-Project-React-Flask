@@ -9,6 +9,7 @@ import injectContext from "./store/appContext";
 
 import { Footer } from "./component/footer";
 import Navbar from "./component/navbar";
+import Sidebar from "./component/sidebar";
 import App from "./component/App";
 import { Login } from "./component/Login";
 import { Register } from "./component/Register";
@@ -26,6 +27,7 @@ const Layout = () => {
       <BrowserRouter basename={basename}>
         <ScrollToTop>
           <Navbar />
+          <Sidebar/>
 
           <Routes>
             <Route path="/" element={<Home />} />

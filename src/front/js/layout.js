@@ -4,9 +4,9 @@ import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./views/home";
 import { Demo } from "./views/demo";
-import { Favorites } from "./views/favorites";
-import { Top10 } from "./views/top10";
-import { Bottom10 } from "./views/bottom10";
+import { Favorites } from "./pages/favorites";
+import { Top10 } from "./pages/top10";
+import { Bottom10 } from "./pages/bottom10";
 import { Single } from "./views/single";
 import injectContext from "./store/appContext";
 

@@ -4,7 +4,7 @@ export const Favorites = () => {
 
 	return (
 		<div className="text-center mt-5">
-			<h1>Favorties</h1>
+			<h1>Favorites</h1>
 		</div>
 	);
 };

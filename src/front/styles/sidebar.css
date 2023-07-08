@@ -1,8 +1,8 @@
 .sidebar {
     position: absolute;
-    top: 80px; /* Adjust the top margin as needed */
+    top: 80px;
     left: 0;
-    width: 200px; /* Adjust the width as needed */
+    width: 200px;
     height: 100%;
     background: rgb(242, 239, 239);
     border: 1px solid black;

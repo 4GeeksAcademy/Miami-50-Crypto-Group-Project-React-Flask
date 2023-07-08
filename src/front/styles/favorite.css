@@ -1,0 +1,14 @@
+.card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15rem;
+}
+
+.row {
+    margin-left: 7rem;
+}
+
+#myTab {
+    
+}

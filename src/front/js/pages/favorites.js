@@ -1,6 +1,5 @@
 import React from "react";
 import "../../styles/favorite.css";
-import { Grid, List } from 'react-bootstrap-icons';
 
 export const Favorites = () => {
 

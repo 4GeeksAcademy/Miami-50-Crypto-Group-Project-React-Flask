@@ -33,28 +33,7 @@ try {
 	console.error(error);
 }}
 fetchNews()
-    //   const options = {
-    //     method: 'GET',
-    //     url: 'https://cryptocurrency-news2.p.rapidapi.com/v1/coindesk',
-    //     headers: {
-    //       'X-RapidAPI-Key': 
-    //       'X-RapidAPI-Host': 'cryptocurrency-news2.p.rapidapi.com'
-    //     }
-    //   }
 
-    // axios.request(options).then((response) => {
-    //   console.log(response.data)
-    //   setNews(response.data)
-    // }).catch((error) => {
-    //   console.error(error)
-    // })
-    // const news = async () => {
-    //   const response = await setNews();
-    //   const data = response.data;
-    //   console.log(data);
-    //   setPosts(data);
-    // };
-    // setNews();
     }, [])
       // console.log(news)
       

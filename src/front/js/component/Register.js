@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./register.css";
+import "../../styles/register.css";
 
 export const Register = () => {
   const [names, setNames] = useState("");
@@ -57,8 +57,8 @@ export const Register = () => {
           required
         />
 
-        <label htmlFor="email">Email</label>
-        <input
+        <label htmlFor="email"><i className="fas fa-envelope" style={{ color: "#6caef4" }}></i>Email</label>
+        <input 
           type="email"
           id="email"
           value={email}
@@ -66,7 +66,7 @@ export const Register = () => {
           required
         />
 
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password"><i className="fas fa-lock" style={{ color: "#6caef4" }}></i>Password</label>
         <input
           type="password"
           id="password"
@@ -75,7 +75,7 @@ export const Register = () => {
           required
         />
 
-        <label htmlFor="password-check">Re-enter Password</label>
+        <label htmlFor="password-check"><i className="fas fa-lock" style={{ color: "#6caef4" }}></i>Re-enter Password</label>
         <input
           type="password"
           id="password-check"
@@ -86,9 +86,14 @@ export const Register = () => {
 
         <button type="submit">Register</button>
       </form>
+      <Link to="/login">    
+            <button className="forgot-button">Back to Login <i className="far fa-smile-beam" style={{ color: "#6caef4" }}></i></button>
+        </Link> 
 
       {error && <p>{error}</p>}
       {success && <p>User registered successfully!</p>}
+
+     
     </div>
   );
 };

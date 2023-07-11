@@ -4,7 +4,7 @@ import context from "react-bootstrap/esm/AccordionContext";
 import { Context } from "../store/appContext";
 
 import { Link } from "react-router-dom";
-import "./register.css";
+import "../../styles/register.css";
 import { Passie } from "./Passie";
 
 export const Login = () => {

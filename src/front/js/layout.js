@@ -15,6 +15,7 @@ import { Login } from "./component/Login";
 import { Register } from "./component/Register";
 import { Passie } from "./component/Passie";
 import Private from "./component/private";
+import NewsFeed from "./component/NewsFeed";
 
 //create your first component
 const Layout = () => {
@@ -28,6 +29,7 @@ const Layout = () => {
         <ScrollToTop>
           <Navbar />
           <Sidebar/>
+          <NewsFeed />
 
           <Routes>
             <Route path="/" element={<Home />} />
@@ -36,6 +38,7 @@ const Layout = () => {
             <Route path="/private" element={<Private />} />
             <Route path="/register" element={<Register />} />
             <Route path="/passie" element={<Passie />} />
+            <Route path="/newsfeed" element={<NewsFeed />} />
             <Route path="/demo" element={<Demo />} />
             <Route path="/single/:theid" element={<Single />} />
             <Route path="*" element={<h1>Not found!</h1>} />

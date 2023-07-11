@@ -1,0 +1,27 @@
+.news-feed  {
+    padding-top: 100px;
+    /* align-items: center;*/
+    text-align: center; 
+    display: column;
+    min-height: 10vh;
+    align-items: center;
+    /* justify-content: center; */
+    
+    border-radius: 25px;
+    padding: 20px;
+    margin-top: 10vh;
+    margin-left: 215px;
+    margin-right: 5px;
+    border: 2px;
+    border-style: double;
+    border-color: darkblue;
+    font-family: Arial, Helvetica, sans-serif;
+}
+h3 h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    border: 5px;
+    border-color: darkblue;
+    border-radius: 25px;
+    text-align: center; 
+    display: column;  
+}

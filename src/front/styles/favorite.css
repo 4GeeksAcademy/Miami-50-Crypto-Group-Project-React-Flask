@@ -5,10 +5,35 @@
     width: 15rem;
 }
 
-.row {
-    margin-left: 7rem;
+.container {
+    margin-left: 210px;
+    margin-right: 210px;
 }
 
-#myTab {
-    
+.card-body {
+    text-align: left;
+    padding-left: 0;
+    padding-right: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 5px;
 }
+
+#chart {
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+  
+#percent {
+    color: green;
+    line-height: 5pt;
+    font-size: 14px;
+    padding-top: 10px;
+}
+  
+#amount {
+    margin-top: 3px;
+    line-height: 5pt;
+}
+  

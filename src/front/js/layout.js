@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
-import { Home } from "./views/home";
+import Home from "./pages/home";
 import { Demo } from "./views/demo";
 import { Single } from "./views/single";
 import injectContext from "./store/appContext";
@@ -16,6 +16,7 @@ import { Register } from "./component/Register";
 import { Passie } from "./component/Passie";
 import Private from "./component/private";
 import NewsFeed from "./component/NewsFeed";
+import CryptoCard from "./component/CryptoCard";
 
 //create your first component
 const Layout = () => {
@@ -28,11 +29,18 @@ const Layout = () => {
       <BrowserRouter basename={basename}>
         <ScrollToTop>
           <Navbar />
-          <Sidebar/>
-          <NewsFeed />
+          <Sidebar />
 
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route
+              path="/"
+              element={
+                <>
+                  <CryptoCard />
+                  <NewsFeed />
+                </>
+              }
+            />
             <Route path="/App" element={<App />} />
             <Route path="/login" element={<Login />} />
             <Route path="/private" element={<Private />} />

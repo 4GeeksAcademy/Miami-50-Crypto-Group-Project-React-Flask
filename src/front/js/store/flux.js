@@ -1,5 +1,6 @@
 import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
-
+import { useEffect } from "react";
+import axios from "axios";
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
@@ -67,34 +68,55 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      //   getMessage: async () => {
-      //     try {
-      //       // fetching data from the backend
-      //       const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
-      //       const data = await resps.json();
-      //       setStore({ message: data.message });
-      //       // don't forget to return something, that is how the async resolves
-      //       return data;
-      //     } catch (error) {
-      //       console.log("Error loading message from backend", error);
-      //     }
-      //   },
-      //   changeColor: (index, color) => {
-      //     //get the store
-      //     const store = getStore();
+      fetchCryptoData: async () => {
+        try {
+          const response = await axios.get(
+            "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24&locale=en"
+          );
+          setStore({ cryptoData: response.data });
+        } catch (error) {
+          console.error("Error fetching crypto data", error);
+        }
+      },
 
-      //     //we have to loop the entire demo array to look for the respective index
-      //     //and change its color
-      //     const demo = store.demo.map((elm, i) => {
-      //       if (i === index) elm.background = color;
-      //       return elm;
-      //     });
+      startCryptoDataUpdate: () => {
+        const interval = setInterval(getActions().fetchCryptoData, 60000); // Fetch data every 60 seconds
 
-      //     //reset the global store
-      //     setStore({ demo: demo });
-      //   },
+        // Fetch initial data immediately
+        getActions().fetchCryptoData();
+
+        return () => {
+          clearInterval(interval); // Clear the interval on component unmount
+        };
+      },
     },
   };
 };
+//   getMessage: async () => {
+//     try {
+//       // fetching data from the backend
+//       const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
+//       const data = await resps.json();
+//       setStore({ message: data.message });
+//       // don't forget to return something, that is how the async resolves
+//       return data;
+//     } catch (error) {
+//       console.log("Error loading message from backend", error);
+//     }
+//   },
+//   changeColor: (index, color) => {
+//     //get the store
+//     const store = getStore();
+
+//     //we have to loop the entire demo array to look for the respective index
+//     //and change its color
+//     const demo = store.demo.map((elm, i) => {
+//       if (i === index) elm.background = color;
+//       return elm;
+//     });
+
+//     //reset the global store
+//     setStore({ demo: demo });
+//   },
 
 export default getState;

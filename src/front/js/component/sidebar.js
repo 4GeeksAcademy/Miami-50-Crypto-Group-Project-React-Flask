@@ -1,26 +1,27 @@
-import React from "react"
-import { Link } from "react-router-dom";
+import React from "react";
+import { Nav } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import "../../styles/sidebar.css";
 
 function Sidebar() {
-	return (
-		<div className="sidebar">
-			<ul className="nav flex-column">
-				<li className="nav-item">
-					<Link to="/">Home</Link>
-				</li>
-				<li className="nav-item">
-					<Link to="/favorites">Favorites</Link>
-				</li>
-				<li className="nav-item">
-					<Link to="/top">Top 10</Link>
-				</li>
-				<li className="nav-item">
-					<Link to="/bottom">Bottom 10</Link>
-				</li>
-			</ul>
-		</div>
-	);
+  return (
+    <div className="sidebar">
+      <Nav className="flex-column">
+        <LinkContainer to="/">
+          <Nav.Link>Home</Nav.Link>
+        </LinkContainer>
+        <LinkContainer to="/favorites">
+          <Nav.Link>Favorites</Nav.Link>
+        </LinkContainer>
+        <LinkContainer to="/top">
+          <Nav.Link>Top 10</Nav.Link>
+        </LinkContainer>
+        <LinkContainer to="/bottom">
+          <Nav.Link>Bottom 10</Nav.Link>
+        </LinkContainer>
+      </Nav>
+    </div>
+  );
 }
 
 export default Sidebar;

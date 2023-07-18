@@ -10,82 +10,93 @@ export const Bottom10 = () => {
 				<thead>
 					<tr>
 					<th scope="col">Name</th>
-					<th scope="col">Price</th>
-					<th scope="col">Chart</th>
-					<th scope="col">Change</th>
+					<th scope="col">Current Price</th>
 					<th scope="col">Market Cap</th>
+					<th scope="col">24h Price Change</th>
+					<th scope="col">24h Price Change Percentage</th>
+					<th scope="col">Last Updated</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-					<th scope="row">First</th>
-					<td>$</td>
-					<td>--^-v-</td>
-					<td>%</td>
-					<td>$</td>
+					<th scope="row"><img src={crypto.image} alt={crypto.name} className="thumbnail" />{crypto.name}</th>
+					<td>${crypto.current_price}</td>
+					<td>${crypto.market_cap}</td>
+					<td>{crypto.price_change_24h}</td>
+					<td>{crypto.price_change_percentage_24h}%</td>
+					<td>{crypto.last_updated}</td>
 					</tr>
 					<tr>
-					<th scope="row">Second</th>
-					<td>$</td>
-					<td>--^-v-</td>
-					<td>%</td>
-					<td>$</td>
+					<th scope="row"><img src={crypto.image} alt={crypto.name} className="thumbnail" />{crypto.name}</th>
+					<td>${crypto.current_price}</td>
+					<td>${crypto.market_cap}</td>
+					<td>{crypto.price_change_24h}</td>
+					<td>{crypto.price_change_percentage_24h}%</td>
+					<td>{crypto.last_updated}</td>
 					</tr>
 					<tr>
-					<th scope="row">Third</th>
-					<td>$</td>
-					<td>--^-v-</td>
-					<td>%</td>
-					<td>$</td>
+					<th scope="row"><img src={crypto.image} alt={crypto.name} className="thumbnail" />{crypto.name}</th>
+					<td>${crypto.current_price}</td>
+					<td>${crypto.market_cap}</td>
+					<td>{crypto.price_change_24h}</td>
+					<td>{crypto.price_change_percentage_24h}%</td>
+					<td>{crypto.last_updated}</td>
 					</tr>
 					<tr>
-					<th scope="row">Fourth</th>
-					<td>$</td>
-					<td>--^-v-</td>
-					<td>%</td>
-					<td>$</td>
+					<th scope="row"><img src={crypto.image} alt={crypto.name} className="thumbnail" />{crypto.name}</th>
+					<td>${crypto.current_price}</td>
+					<td>${crypto.market_cap}</td>
+					<td>{crypto.price_change_24h}</td>
+					<td>{crypto.price_change_percentage_24h}%</td>
+					<td>{crypto.last_updated}</td>
 					</tr>
 					<tr>
-					<th scope="row">Fifth</th>
-					<td>$</td>
-					<td>--^-v-</td>
-					<td>%</td>
-					<td>$</td>
+					<th scope="row"><img src={crypto.image} alt={crypto.name} className="thumbnail" />{crypto.name}</th>
+					<td>${crypto.current_price}</td>
+					<td>${crypto.market_cap}</td>
+					<td>{crypto.price_change_24h}</td>
+					<td>{crypto.price_change_percentage_24h}%</td>
+					<td>{crypto.last_updated}</td>
 					</tr>
 					<tr>
-					<th scope="row">Sixth</th>
-					<td>$</td>
-					<td>--^-v-</td>
-					<td>%</td>
-					<td>$</td>
+					<th scope="row"><img src={crypto.image} alt={crypto.name} className="thumbnail" />{crypto.name}</th>
+					<td>${crypto.current_price}</td>
+					<td>${crypto.market_cap}</td>
+					<td>{crypto.price_change_24h}</td>
+					<td>{crypto.price_change_percentage_24h}%</td>
+					<td>{crypto.last_updated}</td>
 					</tr>
 					<tr>
-					<th scope="row">Seventh</th>
-					<td>$</td>
-					<td>--^-v-</td>
-					<td>%</td>
-					<td>$</td>
+					<th scope="row"><img src={crypto.image} alt={crypto.name} className="thumbnail" />{crypto.name}</th>
+					<td>${crypto.current_price}</td>
+					<td>${crypto.market_cap}</td>
+					<td>{crypto.price_change_24h}</td>
+					<td>{crypto.price_change_percentage_24h}%</td>
+					<td>{crypto.last_updated}</td>
 					</tr>
 					<tr>
-					<th scope="row">Eighth</th>
-					<td>$</td>
-					<td>--^-v-</td>
-					<td>%</td>
-					<td>$</td>
+					<th scope="row"><img src={crypto.image} alt={crypto.name} className="thumbnail" />{crypto.name}</th>
+					<td>${crypto.current_price}</td>
+					<td>${crypto.market_cap}</td>
+					<td>{crypto.price_change_24h}</td>
+					<td>{crypto.price_change_percentage_24h}%</td>
+					<td>{crypto.last_updated}</td>
 					</tr>
 					<tr>
-					<th scope="row">Ninth</th>
-					<td>$</td>
-					<td>--^-v-</td>
-					<td>%</td>
-					<td>$</td>
+					<th scope="row"><img src={crypto.image} alt={crypto.name} className="thumbnail" />{crypto.name}</th>
+					<td>${crypto.current_price}</td>
+					<td>${crypto.market_cap}</td>
+					<td>{crypto.price_change_24h}</td>
+					<td>{crypto.price_change_percentage_24h}%</td>
+					<td>{crypto.last_updated}</td>
 					</tr>
 					<tr>
-					<th scope="row">Tenth</th>
-					<td>$</td>
-					<td>--^-v-</td>
-					<td>%</td>
-					<td>$</td>
+					<th scope="row"><img src={crypto.image} alt={crypto.name} className="thumbnail" />{crypto.name}</th>
+					<td>${crypto.current_price}</td>
+					<td>${crypto.market_cap}</td>
+					<td>{crypto.price_change_24h}</td>
+					<td>{crypto.price_change_percentage_24h}%</td>
+					<td>{crypto.last_updated}</td>
 					</tr>
 				</tbody>
 			</table>

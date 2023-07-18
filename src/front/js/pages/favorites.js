@@ -5,25 +5,22 @@ export const Favorites = ({ fav }) => {
 
 	return (
 		<div className="text-center mt-5">
-			<h1>Favorites</h1>
-			<div className="d-flex justify-content-center">
-			  <div className="container">
-				<div className="row">
-				  {Array.isArray(fav) && fav.map((favItem, index) => (
-					<div className="col" key={index}>
-					  <div className="card">
-						<div className="card-body">
-						  <h5 className="card-title">Name{asset.icon}{favItem}</h5>
-						  <div className="card-text" id="chart">Chart{asset.chart}</div>
-						  <p className="card-text" id="percent">Change{asset.change}</p>
-						  <h6 className="card-text" id="amount">Amount{asset.amount}</h6>
-						</div>
-					  </div>
-					</div>
-				  ))}
-				</div>
+		  <h1>Favorites</h1>
+		  <div className="scrollable-container">
+		  {Array.isArray(fav) && fav.map((crypto) => (
+			  <div className="card" key={crypto.id}>
+				<img src={crypto.image} alt={crypto.name} className="thumbnail" />
+				<h3>{crypto.name}</h3>
+				<p>Current Price: ${crypto.current_price}</p>
+				<p>Market Cap: ${crypto.market_cap}</p>
+				<p>24h Price Change: {crypto.price_change_24h}</p>
+				<p>
+				  24h Price Change Percentage: {crypto.price_change_percentage_24h}%
+				</p>
+				<p>Last Updated: {crypto.last_updated}</p>
 			  </div>
-			</div>
+			))}
+		  </div>
 		</div>
 	);
 };

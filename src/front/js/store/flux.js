@@ -4,8 +4,10 @@ import axios from "axios";
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
+      news: [],
       token: null,
       message: null,
+      error: null,
       demo: [
         {
           title: "FIRST",
@@ -20,6 +22,57 @@ const getState = ({ getStore, getActions, setStore }) => {
       ],
     },
     actions: {
+      fetchNewsData: async () => {
+        const url = "https://crypto-news16.p.rapidapi.com/news/coindesk";
+        const options = {
+          method: "GET",
+          headers: {
+            "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API_KEY,
+            "X-RapidAPI-Host": "crypto-news16.p.rapidapi.com",
+          },
+        };
+
+        try {
+          const response = await fetch(url, options);
+          if (response.status === 429) {
+            setStore({
+              error: "Too many requests. Please try again later.",
+              news: [],
+            });
+          } else {
+            const result = await response.json();
+            setStore({ news: result, error: null });
+            // Save the news data in localStorage
+            localStorage.setItem("newsData", JSON.stringify(result));
+          }
+        } catch (error) {
+          console.error(error);
+          setStore({
+            error: "Failed to load news. Please try again later.",
+            news: [],
+          });
+        }
+      },
+
+      startNewsDataUpdate: () => {
+        // Check if news data exists in localStorage
+        const storedNewsData = localStorage.getItem("newsData");
+
+        if (storedNewsData) {
+          // If data exists in localStorage, use it to update the store
+          const newsData = JSON.parse(storedNewsData);
+          setStore({ news: newsData, error: null });
+        } else {
+          // If no data in localStorage, fetch initial data immediately
+          getActions().fetchNewsData();
+        }
+
+        const interval = setInterval(getActions().fetchNewsData, 60000); // Fetch data every 60 seconds
+
+        return () => {
+          clearInterval(interval); // Clear the interval on component unmount
+        };
+      },
       // Use getActions to call a function within a fuction
       exampleFunction: () => {
         getActions().changeColor(0, "green");
@@ -73,17 +126,67 @@ const getState = ({ getStore, getActions, setStore }) => {
           const response = await axios.get(
             "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24&locale=en"
           );
-          setStore({ cryptoData: response.data });
+          const cryptoData = response.data;
+
+          // Save the data in the store
+          setStore({ cryptoData });
+
+          // Also, save the data in localStorage for persistence across page reloads
+          localStorage.setItem("cryptoData", JSON.stringify(cryptoData));
         } catch (error) {
           console.error("Error fetching crypto data", error);
         }
       },
 
       startCryptoDataUpdate: () => {
+        const storedCryptoData = localStorage.getItem("cryptoData");
+
+        if (storedCryptoData) {
+          // If data exists in localStorage, use it to update the store
+          const cryptoData = JSON.parse(storedCryptoData);
+          setStore({ cryptoData });
+        } else {
+          // If no data in localStorage, fetch initial data immediately
+          getActions().fetchCryptoData();
+        }
+
         const interval = setInterval(getActions().fetchCryptoData, 60000); // Fetch data every 60 seconds
 
-        // Fetch initial data immediately
-        getActions().fetchCryptoData();
+        return () => {
+          clearInterval(interval); // Clear the interval on component unmount
+        };
+      },
+
+      fetchTrendingData: async () => {
+        try {
+          const response = await axios.get(
+            "https://api.coingecko.com/api/v3/search/trending"
+          );
+          const trendingData = response.data;
+
+          // Save the data in the store
+          setStore({ trendingData });
+
+          // Also, save the data in localStorage for persistence across page reloads
+          localStorage.setItem("trendingData", JSON.stringify(trendingData));
+        } catch (error) {
+          console.error("Error fetching trending data", error);
+        }
+      },
+
+      startTrendingDataUpdate: () => {
+        const storedTrendingData = localStorage.getItem("trendingData");
+
+        if (storedTrendingData) {
+          // If data exists in localStorage, use it to update the store
+          const trendingData = JSON.parse(storedTrendingData);
+          setStore({ trendingData });
+        } else {
+          // If no data in localStorage, fetch initial data immediately
+          getActions().fetchTrendingData();
+        }
+
+        const interval = setInterval(getActions().fetchTrendingData, 60000); // Fetch data every 60 seconds
 
         return () => {
           clearInterval(interval); // Clear the interval on component unmount

@@ -5,6 +5,8 @@ import axios from "axios";
 
 const NewsFeed = () => {
   const [news, setNews] = useState([]);
+  const [error, setError] = useState(null); // New state to store the error
+
   const currentDate = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     month: "long",
@@ -24,11 +26,16 @@ const NewsFeed = () => {
     const fetchNews = async () => {
       try {
         const response = await fetch(url, options);
-        const result = await response.json();
-        setNews(result);
-        console.log(result);
+        if (response.status === 429) {
+          setError("Too many requests. Please try again later.");
+        } else {
+          const result = await response.json();
+          setNews(result);
+          console.log(result);
+        }
       } catch (error) {
         console.error(error);
+        setError("Failed to load news. Please try again later.");
       }
     };
 
@@ -36,6 +43,10 @@ const NewsFeed = () => {
   }, []);
 
   const initialArticles = news.slice(0, 3);
+
+  if (error) {
+    return <div className="news-feed">{error}</div>;
+  }
 
   return (
     <div className="news-feed">

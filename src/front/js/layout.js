@@ -17,6 +17,7 @@ import { Passie } from "./component/Passie";
 import Private from "./component/private";
 import NewsFeed from "./component/NewsFeed";
 import CryptoCard from "./component/CryptoCard";
+import Trending from "./component/trending";
 
 //create your first component
 const Layout = () => {
@@ -36,7 +37,8 @@ const Layout = () => {
               path="/"
               element={
                 <>
-                  <CryptoCard />
+                  <Trending />
+                  {/* <CryptoCard /> */}
                   <NewsFeed />
                 </>
               }

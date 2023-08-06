@@ -5,6 +5,17 @@
   gap: 20px;
 }
 
+.trending-container {
+  display: flex;
+  flex-direction: column; /* Set flex-direction to column to stack the elements vertically */
+  align-items: center; /* Center align the child elements horizontally */
+  padding-top: 20px; /* Add some padding on top to create space for the heading */
+}
+
+.centered {
+  text-align: center;
+}
+
 .card {
   flex: 0 0 auto;
   margin-right: 10px; /* Adjust the margin as needed */

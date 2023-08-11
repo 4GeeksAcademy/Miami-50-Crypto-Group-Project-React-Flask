@@ -10,8 +10,8 @@ function Sidebar() {
         <LinkContainer to="/">
           <Nav.Link>Home</Nav.Link>
         </LinkContainer>
-        <LinkContainer to="/favorites">
-          <Nav.Link>Favorites</Nav.Link>
+        <LinkContainer to="/allassets">
+          <Nav.Link>All Assets</Nav.Link>
         </LinkContainer>
         <LinkContainer to="/top">
           <Nav.Link>Top 10</Nav.Link>

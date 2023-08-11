@@ -25,7 +25,7 @@ export const Login = () => {
 
   useEffect(() => {
     if (store.token && store.token !== "" && store.token !== undefined) {
-      history("/private");
+      history("/allassets");
     }
   }, [store.token, history]);
   return (
@@ -42,7 +42,6 @@ export const Login = () => {
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              
               type="email"
               placeholder="your_email@cryptotart.com"
               id="email"

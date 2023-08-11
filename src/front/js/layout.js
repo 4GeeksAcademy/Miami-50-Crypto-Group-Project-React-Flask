@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
@@ -19,17 +19,20 @@ import NewsFeed from "./component/NewsFeed";
 import CryptoCard from "./component/CryptoCard";
 import Trending from "./component/trending";
 
-//create your first component
 const Layout = () => {
-  //the basename is used when your project is published in a subdirectory and not in the root of the domain
-  // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
+  const [searchTerm, setSearchTerm] = useState("bitcoin");
+
+  const handleSearchTermUpdate = (newSearchTerm) => {
+    setSearchTerm(newSearchTerm);
+  };
+
   const basename = process.env.BASENAME || "";
 
   return (
     <div>
       <BrowserRouter basename={basename}>
         <ScrollToTop>
-          <Navbar />
+          <Navbar setSearchTerm={handleSearchTermUpdate} />
           <Sidebar />
 
           <Routes>
@@ -38,7 +41,7 @@ const Layout = () => {
               element={
                 <>
                   <Trending />
-                  {/* <CryptoCard /> */}
+                  <CryptoCard searchTerm={searchTerm} />
                   <NewsFeed />
                 </>
               }
@@ -46,6 +49,10 @@ const Layout = () => {
             <Route path="/App" element={<App />} />
             <Route path="/login" element={<Login />} />
             <Route path="/private" element={<Private />} />
+            <Route
+              path="/allassets"
+              element={<CryptoCard searchTerm={searchTerm} />}
+            />
             <Route path="/register" element={<Register />} />
             <Route path="/passie" element={<Passie />} />
             <Route path="/newsfeed" element={<NewsFeed />} />

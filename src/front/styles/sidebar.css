@@ -1,3 +1,4 @@
+/* Preserve your existing styles */
 .sidebar {
   position: fixed;
   left: 0;
@@ -9,7 +10,7 @@
   margin: 10px;
   padding: 20px;
   overflow-y: auto;
-  z-index: 1; /* Add a z-index value higher than other components */
+  z-index: 1;
 }
 
 .nav {
@@ -22,4 +23,25 @@
 
 .nav-item {
   padding: 10px;
+}
+
+/* New styles for the buttons */
+.nav-link {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #000;
+  border-radius: 10px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-link:hover {
+  background-color: #f39c12;
+  color: #fff;
+}
+
+.active .nav-link {
+  background-color: #f39c12;
+  color: #fff;
 }

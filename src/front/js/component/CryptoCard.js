@@ -1,35 +1,89 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "../../styles/card.css";
 
-const CryptoCard = () => {
+const CryptoCard = ({ searchTerm }) => {
   const { store, actions } = useContext(Context);
+  const history = useNavigate();
+  const [filteredCryptoData, setFilteredCryptoData] = useState([]);
+
+  useEffect(() => {
+    if (!store.token || store.token === "" || store.token === undefined) {
+      history("/login");
+    }
+  }, [store.token, history]);
 
   useEffect(() => {
     actions.startCryptoDataUpdate();
   }, []);
 
-  const { cryptoData } = store;
+  useEffect(() => {
+    if (!searchTerm) {
+      setFilteredCryptoData(store.cryptoData);
+    } else {
+      const filteredData = store.cryptoData.filter(
+        (crypto) =>
+          crypto.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          crypto.symbol.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredCryptoData(filteredData);
+    }
+  }, [searchTerm, store.cryptoData]);
 
-  if (!cryptoData || cryptoData.length === 0) {
-    return null; // Render nothing if cryptoData is empty
+  if (!filteredCryptoData || filteredCryptoData.length === 0) {
+    return <p>No matching cryptocurrencies found.</p>;
   }
 
   return (
     <div className="card-container">
       <div className="scrollable-container">
-        {cryptoData.map((crypto) => (
+        {filteredCryptoData.map((crypto) => (
           <div className="card" key={crypto.id}>
             <img src={crypto.image} alt={crypto.name} className="thumbnail" />
-            <h3>{crypto.name}</h3>
-            <p>Current Price: ${crypto.current_price}</p>
-            <p>Market Cap: ${crypto.market_cap}</p>
-            <p>24h Price Change: {crypto.price_change_24h}</p>
+            <h3>
+              <span className="">{crypto.name}</span>
+            </h3>
             <p>
-              24h Price Change Percentage: {crypto.price_change_percentage_24h}%
+              Current Price:{" "}
+              <span className="bold-text">
+                ${crypto.current_price.toLocaleString()}
+              </span>
             </p>
-            <p>Last Updated: {crypto.last_updated}</p>
+            <p>
+              Market Cap:{" "}
+              <span className="bold-text">
+                ${crypto.market_cap.toLocaleString()}
+              </span>
+            </p>
+            <p>
+              24h Price Change:{" "}
+              <span
+                className={
+                  crypto.price_change_24h < 0
+                    ? "negative bold-text"
+                    : "positive bold-text"
+                }
+              >
+                {crypto.price_change_24h.toFixed(8)}
+              </span>
+            </p>
+            <p>
+              24h Price Change Percentage:{" "}
+              <span
+                className={
+                  crypto.price_change_percentage_24h < 0
+                    ? "negative bold-text"
+                    : "positive bold-text"
+                }
+              >
+                {crypto.price_change_percentage_24h}%
+              </span>
+            </p>
+            <p>
+              Last Updated:{" "}
+              <span className="bold-text">{crypto.last_updated}</span>
+            </p>
           </div>
         ))}
       </div>

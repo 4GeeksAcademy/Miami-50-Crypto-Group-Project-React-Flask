@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Card
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -27,7 +27,8 @@ def login():
         return jsonify({"msg": "Invalid email or password"}), 401
 
     access_token = create_access_token(identity=user.email)
-    return jsonify(access_token=access_token)
+    return jsonify(access_token=access_token, user_id=user.id)
+
 
 @api.route("/register", methods=["POST"])
 def register():
@@ -43,11 +44,13 @@ def register():
         return jsonify({"msg": "Email already exists"}), 409
 
     hashed_password = generate_password_hash(password)
-    new_user = User(names=names, email=email, password=hashed_password, is_active=True)
+    new_user = User(names=names, email=email,
+                    password=hashed_password, is_active=True)
     db.session.add(new_user)
     db.session.commit()
 
     return jsonify({"msg": "User registered successfully"}), 201
+
 
 @api.route("/users", methods=["GET"])
 def get_all_users():
@@ -69,7 +72,8 @@ def get_all_users():
         return jsonify(user_list), 200
     except Exception as e:
         return jsonify({"msg": "Failed to retrieve users"}), 500
-    
+
+
 @api.route("/users/delete-all", methods=["DELETE"])
 def delete_all_users():
     try:
@@ -80,5 +84,57 @@ def delete_all_users():
         return jsonify({"msg": "All users deleted successfully"}), 200
     except Exception as e:
         return jsonify({"msg": "Failed to delete users"}), 500
-    
-    
+
+
+@api.route("/users/<int:user_id>/favorite-cards/<int:card_id>", methods=["POST"])
+@jwt_required()  # Ensure user is authenticated
+def add_favorite_card(user_id, card_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+
+    card = Card.query.get(card_id)
+    if not card:
+        return jsonify({"msg": "Card not found"}), 404
+
+    user.favorite_cards.append(card)
+    db.session.commit()
+
+    return jsonify({"msg": "Card added to favorites"}), 200
+
+
+@api.route("/users/<int:user_id>/favorite-cards/<int:card_id>", methods=["DELETE"])
+@jwt_required()  # Ensure user is authenticated
+def remove_favorite_card(user_id, card_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+
+    card = Card.query.get(card_id)
+    if not card:
+        return jsonify({"msg": "Card not found"}), 404
+
+    user.favorite_cards.remove(card)
+    db.session.commit()
+
+    return jsonify({"msg": "Card removed from favorites"}), 200
+
+
+@api.route("/users/<int:user_id>/favorite-cards", methods=["GET"])
+@jwt_required()  # Ensure user is authenticated
+def get_favorite_cards(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+
+    favorite_cards = user.favorite_cards
+    favorite_cards_data = [
+        {
+            "id": card.id,
+            "name": card.name,  # Replace with actual card data
+            # Add any other relevant card fields
+        }
+        for card in favorite_cards
+    ]
+
+    return jsonify(favorite_cards_data), 200

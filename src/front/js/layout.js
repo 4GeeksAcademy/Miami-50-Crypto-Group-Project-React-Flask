@@ -18,9 +18,10 @@ import Private from "./component/private";
 import NewsFeed from "./component/NewsFeed";
 import CryptoCard from "./component/CryptoCard";
 import Trending from "./component/trending";
+import Portfolio from "./component/Portfolio";
 
 const Layout = () => {
-  const [searchTerm, setSearchTerm] = useState("bitcoin");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearchTermUpdate = (newSearchTerm) => {
     setSearchTerm(newSearchTerm);
@@ -41,7 +42,7 @@ const Layout = () => {
               element={
                 <>
                   <Trending />
-                  <CryptoCard searchTerm={searchTerm} />
+                  {/* <CryptoCard searchTerm={searchTerm} /> */}
                   <NewsFeed />
                 </>
               }
@@ -49,6 +50,7 @@ const Layout = () => {
             <Route path="/App" element={<App />} />
             <Route path="/login" element={<Login />} />
             <Route path="/private" element={<Private />} />
+            <Route path="/portfolio" element={<Portfolio />} />
             <Route
               path="/allassets"
               element={<CryptoCard searchTerm={searchTerm} />}

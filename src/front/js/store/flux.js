@@ -8,6 +8,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: null,
       message: null,
       error: null,
+      favoriteCardIds: [],
+      userId: null,
       demo: [
         {
           title: "FIRST",
@@ -113,9 +115,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           const data = await resp.json();
           console.log("Backend data check", data);
+
+          // Store the token and user ID
           sessionStorage.setItem("token", data.access_token);
-          //   localStorage.setItem("token", data.access_token);
-          setStore({ token: data.access_token });
+          setStore({ token: data.access_token, userId: data.user_id });
+
+          console.log("User ID set to:", data.user_id);
         } catch (error) {
           console.error("ERROR ERROR ERROR DOES NOT COMPUTE", error);
         }
@@ -150,7 +155,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().fetchCryptoData();
         }
 
-        const interval = setInterval(getActions().fetchCryptoData, 60000); // Fetch data every 60 seconds
+        const interval = setInterval(getActions().fetchCryptoData, 120000); // Fetch data every 60 seconds
 
         return () => {
           clearInterval(interval); // Clear the interval on component unmount
@@ -191,6 +196,83 @@ const getState = ({ getStore, getActions, setStore }) => {
         return () => {
           clearInterval(interval); // Clear the interval on component unmount
         };
+      },
+
+      getFavoriteCards: async () => {
+        try {
+            const { token, userId } = getStore(); // Get both token and userId from the store
+    
+            const response = await fetch(
+                `http://127.0.0.1:3001/api/users/${userId}/favorite-cards`,
+                {
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                    },
+                }
+            );
+    
+            if (response.status === 401) {
+                console.error("Authentication error: Invalid token");
+                // Handle unauthorized access, e.g., redirect to login page
+                return [];
+            } else if (response.status !== 200) {
+                console.error("Error getting favorite cards");
+                throw new Error("Error getting favorite cards");
+            }
+    
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error getting favorite cards:", error);
+            throw error;
+        }
+    },
+      addFavoriteCard: async (cardId) => {
+        try {
+          const userId = getStore().userId;
+          const response = await fetch(
+            `http://127.0.0.1:3001/api/users/${userId}/favorite-cards/${cardId}`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getStore().token}`,
+              },
+            }
+          );
+
+          if (response.status !== 200) {
+            console.error("Error adding card to favorites");
+          } else {
+            console.log("Card added to favorites");
+          }
+        } catch (error) {
+          console.error("Error adding card to favorites:", error);
+        }
+      },
+
+      removeFavoriteCard: async (cardId) => {
+        try {
+          const userId = getStore().userId;
+          const response = await fetch(
+            `http://127.0.0.1:3001/api/users/${userId}/favorite-cards/${cardId}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getStore().token}` // Include the JWT token
+              },
+            }
+          );
+
+          if (response.status !== 200) {
+            console.error("Error removing card from favorites");
+          } else {
+            console.log("Card removed from favorites");
+          }
+        } catch (error) {
+          console.error("Error removing card from favorites:", error);
+        }
       },
     },
   };

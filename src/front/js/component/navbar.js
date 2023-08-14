@@ -1,18 +1,26 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import { Context } from "../store/appContext";
 import "./navbar.css";
 
 export const Navbar = ({ setSearchTerm }) => {
   const { store, actions } = useContext(Context);
-  const [searchTermInput, setSearchTermInput] = useState("bitcoin");
-
+  const [searchTermInput, setSearchTermInput] = useState("");
+  const navigate = useNavigate();
   const handleLogout = () => {
     // Perform logout action here
   };
 
-  const handleSearch = () => {
-    setSearchTerm(searchTermInput); // Update the search term using the provided function
+  const handleSearch = (e) => {
+    const newSearchTerm = e.target.value;
+    setSearchTermInput(newSearchTerm);
+    setSearchTerm(newSearchTerm); // Update the search term dynamically
+    if (newSearchTerm === "") {
+      navigate(-1); // Go back to the previous page
+    } else {
+      navigate("/allassets"); // Navigate to the /allassets page
+    }
   };
 
   return (
@@ -28,9 +36,9 @@ export const Navbar = ({ setSearchTerm }) => {
           type="text"
           placeholder="Search Coins..."
           value={searchTermInput}
-          onChange={(e) => setSearchTermInput(e.target.value)}
+          onChange={handleSearch} // Use handleSearch on onChange event
         />
-        <button onClick={handleSearch}>Search</button>
+
         <div className="loginButton ml-auto">
           {store.token ? (
             <button onClick={() => actions.logout()}>Logout</button>

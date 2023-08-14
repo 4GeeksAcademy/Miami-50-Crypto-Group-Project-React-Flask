@@ -13,8 +13,8 @@ function Sidebar() {
         <LinkContainer to="/allassets">
           <Nav.Link>All Assets</Nav.Link>
         </LinkContainer>
-        <LinkContainer to="/top">
-          <Nav.Link>Top 10</Nav.Link>
+        <LinkContainer to="/portfolio">
+          <Nav.Link>My Portfolio</Nav.Link>
         </LinkContainer>
         <LinkContainer to="/bottom">
           <Nav.Link>Bottom 10</Nav.Link>

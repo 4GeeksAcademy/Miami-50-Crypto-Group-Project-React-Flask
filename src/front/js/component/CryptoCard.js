@@ -12,15 +12,21 @@ const CryptoCard = ({ searchTerm }) => {
   useEffect(() => {
     if (!store.token || store.token === "" || store.token === undefined) {
       history("/login");
+    } else {
+      actions.getFavoriteCards().then((data) => {
+        setFavoriteCardIds(data.map((card) => card.id));
+      });
     }
   }, [store.token, history]);
 
-  useEffect(() => {
-    actions.startCryptoDataUpdate();
-    actions.getFavoriteCards().then((data) => {
-      setFavoriteCardIds(data); // Set the favorite card IDs from the response
-    });
-  }, []);
+  // useEffect(() => {
+  //   actions.startCryptoDataUpdate();
+  //   actions.getFavoriteCards().then((data) => {
+  //     setFavoriteCardIds(data);
+  //   });
+
+  //   return () => {};
+  // }, []);
 
   useEffect(() => {
     if (!searchTerm) {
@@ -35,18 +41,24 @@ const CryptoCard = ({ searchTerm }) => {
     }
   }, [searchTerm, store.cryptoData]);
 
-  const handleAddFavorite = (cardId) => {
-    if (!favoriteCardIds.includes(cardId)) {
-      actions.addFavoriteCard(store.userId, cardId); // Pass the user ID here
-      setFavoriteCardIds([...favoriteCardIds, cardId]);
+  const handleAddFavorite = (uniqueId, name) => {
+    if (!favoriteCardIds.includes(uniqueId)) {
+      actions
+        .addFavoriteCard(uniqueId, name)
+        .then(() => {
+          setFavoriteCardIds([...favoriteCardIds, uniqueId]);
+        })
+        .catch((error) => {
+          console.error("Error adding favorite card:", error);
+        });
     }
   };
 
   // Function to handle removing a card from favorites
-  const handleRemoveFavorite = (cardId) => {
-    if (favoriteCardIds.includes(cardId)) {
-      actions.removeFavoriteCard(cardId);
-      setFavoriteCardIds(favoriteCardIds.filter((id) => id !== cardId));
+  const handleRemoveFavorite = (uniqueId) => {
+    if (favoriteCardIds.includes(uniqueId)) {
+      actions.removeFavoriteCard(uniqueId);
+      setFavoriteCardIds(favoriteCardIds.filter((id) => id !== uniqueId));
     }
   };
 
@@ -106,14 +118,14 @@ const CryptoCard = ({ searchTerm }) => {
             <button
               className="favorite-button"
               onClick={() => {
-                if (favoriteCardIds.includes(crypto.id)) {
-                  handleRemoveFavorite(crypto.id);
+                if (favoriteCardIds.includes(crypto.uniqueId)) {
+                  handleRemoveFavorite(crypto.uniqueId);
                 } else {
-                  handleAddFavorite(crypto.id);
+                  handleAddFavorite(crypto.uniqueId, crypto.name); // Pass the card name
                 }
               }}
             >
-              {favoriteCardIds.includes(crypto.id) ? (
+              {favoriteCardIds.includes(crypto.uniqueId) ? (
                 <FaHeart color="red" size={24} />
               ) : (
                 <FaRegHeart size={24} />

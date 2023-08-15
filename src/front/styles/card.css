@@ -13,6 +13,13 @@
   padding-top: 20px;
 }
 
+.portfolio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+}
+
 .centered {
   text-align: center;
 }

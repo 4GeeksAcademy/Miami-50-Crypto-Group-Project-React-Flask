@@ -29,11 +29,11 @@ class User(db.Model):
 
 
 class Card(db.Model):
+    # Change data type to match User's id
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), unique=True, nullable=False)
-    symbol = db.Column(db.String(10), unique=True, nullable=False)
-    # ... other fields ...
-
+    name = db.Column(db.String(120), unique=True, nullable=True)
+    symbol = db.Column(db.String(10), unique=True, nullable=True)
+    input_price = db.Column(db.Float, nullable=True)
     favorite_users = db.relationship(
         "User", secondary="user_favorite_cards", overlaps="favorite_cards")
 
@@ -42,6 +42,7 @@ user_favorite_cards = db.Table(
     "user_favorite_cards",
     db.Column("user_id", db.Integer, db.ForeignKey(
         "user.id"), primary_key=True),
-    db.Column("card_id", db.Integer, db.ForeignKey(
-        "card.id"), primary_key=True),
+    db.Column("card_id", db.Integer, db.ForeignKey("card.id"),
+              primary_key=True),  # Change data type to match User's id
+    db.Column("input_price", db.Float, nullable=True),
 )

@@ -82,25 +82,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       synTokenFromSessStore: () => {
         const token = sessionStorage.getItem("token");
+        const localToken = localStorage.getItem("token");
+        const userId = sessionStorage.getItem("userId"); // Get the user ID from session storage
 
-        if (token && token != "" && token != undefined)
-          setStore({ token: token });
+        if (token && token !== "" && token !== undefined) {
+          setStore({ token: token, userId: userId }); // Set the user ID along with the token
+        } else if (
+          localToken &&
+          localToken !== "" &&
+          localToken !== undefined
+        ) {
+          // If token is found in local store, synchronize it to the session store
+          sessionStorage.setItem("token", localToken);
+          setStore({ token: localToken, userId: userId }); // Set the user ID along with the token
+        }
         console.log(
-          "Everything loaded, synching the session storage token to store"
+          "Synchronized token and userId from local to session store"
         );
       },
 
       setTokenAndUserId: (token, userId) => {
-        sessionStorage.setItem("token", token);
+        localStorage.setItem("token", token);
         sessionStorage.setItem("userId", userId); // Store the user ID in sessionStorage
         setStore({ token: token, userId: userId });
       },
-
       logout: () => {
-        const token = sessionStorage.removeItem("token");
-
+        sessionStorage.removeItem("token");
+        localStorage.removeItem("token");
         setStore({ token: null });
-        console.log("Login out");
+        console.log("Logged out");
       },
       login: async (email, password) => {
         const opt = {
@@ -137,13 +147,18 @@ const getState = ({ getStore, getActions, setStore }) => {
           const response = await axios.get(
             "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24&locale=en"
           );
-          const cryptoData = response.data;
+
+          // Add a unique integer ID to each crypto object
+          const cryptoDataWithIds = response.data.map((crypto, index) => ({
+            ...crypto,
+            uniqueId: index + 1, // You can use any logic you prefer for generating IDs
+          }));
 
           // Save the data in the store
-          setStore({ cryptoData });
+          setStore({ cryptoData: cryptoDataWithIds });
 
           // Also, save the data in localStorage for persistence across page reloads
-          localStorage.setItem("cryptoData", JSON.stringify(cryptoData));
+          localStorage.setItem("cryptoData", JSON.stringify(cryptoDataWithIds));
         } catch (error) {
           console.error("Error fetching crypto data", error);
         }
@@ -206,7 +221,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getFavoriteCards: async () => {
         try {
-          const { token, userId } = getStore(); // Get both token and userId from the store
+          const token = localStorage.getItem("token");
+          const userId = localStorage.getItem("userId");
 
           if (!userId) {
             // If userId is null, synch the session storage token to store to get the userId
@@ -242,12 +258,17 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       addFavoriteCard: async (cardId) => {
         try {
-          const { token, userId } = getStore(); // Get both token and userId from the store
+          const token = localStorage.getItem("token");
+          const userId = localStorage.getItem("userId");
 
           if (!userId) {
             // If userId is null, synch the session storage token to store to get the userId
             getActions().synTokenFromSessStore();
           }
+
+          const requestData = {
+            cardId: cardId,
+          };
 
           const response = await fetch(
             `http://127.0.0.1:3001/api/users/${
@@ -259,6 +280,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
               },
+              body: JSON.stringify({ requestData }),
             }
           );
 

@@ -95,9 +95,24 @@ def add_favorite_card(user_id, card_id):
 
     card = Card.query.get(card_id)
     if not card:
-        return jsonify({"msg": "Card not found"}), 404
+        card = Card(id=card_id)
+        db.session.add(card)
+        db.session.commit()
+
+    # Get input price from request JSON
+    input_price = request.json.get("input_price")
+    if input_price is None or input_price == 0:
+        input_price = None
 
     user.favorite_cards.append(card)
+
+    # Associate the input_price with the specific user and card
+    favorite_entry = next(
+        (entry for entry in user.favorite_cards if entry.id == card_id), None
+    )
+    if favorite_entry:
+        favorite_entry.input_price = input_price
+
     db.session.commit()
 
     return jsonify({"msg": "Card added to favorites"}), 200
@@ -131,8 +146,9 @@ def get_favorite_cards(user_id):
     favorite_cards_data = [
         {
             "id": card.id,
-            "name": card.name,  # Replace with actual card data
-            # Add any other relevant card fields
+            "input_price": card.input_price,
+            # "name": card.name,  # Replace with actual card data
+            # # Add any other relevant card fields
         }
         for card in favorite_cards
     ]

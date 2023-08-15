@@ -9,7 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       message: null,
       error: null,
       favoriteCardIds: [],
-      userId: null,
+      userId: sessionStorage.getItem("userId") || null,
       demo: [
         {
           title: "FIRST",
@@ -89,6 +89,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           "Everything loaded, synching the session storage token to store"
         );
       },
+
+      setTokenAndUserId: (token, userId) => {
+        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("userId", userId); // Store the user ID in sessionStorage
+        setStore({ token: token, userId: userId });
+      },
+
       logout: () => {
         const token = sessionStorage.removeItem("token");
 
@@ -116,9 +123,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await resp.json();
           console.log("Backend data check", data);
 
-          // Store the token and user ID
-          sessionStorage.setItem("token", data.access_token);
-          setStore({ token: data.access_token, userId: data.user_id });
+          // Use getActions() to set both token and userId
+          getActions().setTokenAndUserId(data.access_token, data.user_id);
 
           console.log("User ID set to:", data.user_id);
         } catch (error) {
@@ -200,43 +206,58 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getFavoriteCards: async () => {
         try {
-            const { token, userId } = getStore(); // Get both token and userId from the store
-    
-            const response = await fetch(
-                `http://127.0.0.1:3001/api/users/${userId}/favorite-cards`,
-                {
-                    headers: {
-                        "Authorization": `Bearer ${token}`,
-                    },
-                }
-            );
-    
-            if (response.status === 401) {
-                console.error("Authentication error: Invalid token");
-                // Handle unauthorized access, e.g., redirect to login page
-                return [];
-            } else if (response.status !== 200) {
-                console.error("Error getting favorite cards");
-                throw new Error("Error getting favorite cards");
+          const { token, userId } = getStore(); // Get both token and userId from the store
+
+          if (!userId) {
+            // If userId is null, synch the session storage token to store to get the userId
+            actions.synTokenFromSessStore();
+          }
+
+          const response = await fetch(
+            `http://127.0.0.1:3001/api/users/${
+              getStore().userId
+            }/favorite-cards`, // Use getStore().userId here
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             }
-    
-            const data = await response.json();
-            return data;
+          );
+
+          if (response.status === 401) {
+            console.error("Authentication error: Invalid token");
+            // Handle unauthorized access, e.g., redirect to login page
+            return [];
+          } else if (response.status !== 200) {
+            console.error("Error getting favorite cards");
+            throw new Error("Error getting favorite cards");
+          }
+
+          const data = await response.json();
+          return data;
         } catch (error) {
-            console.error("Error getting favorite cards:", error);
-            throw error;
+          console.error("Error getting favorite cards:", error);
+          throw error;
         }
-    },
+      },
       addFavoriteCard: async (cardId) => {
         try {
-          const userId = getStore().userId;
+          const { token, userId } = getStore(); // Get both token and userId from the store
+
+          if (!userId) {
+            // If userId is null, synch the session storage token to store to get the userId
+            getActions().synTokenFromSessStore();
+          }
+
           const response = await fetch(
-            `http://127.0.0.1:3001/api/users/${userId}/favorite-cards/${cardId}`,
+            `http://127.0.0.1:3001/api/users/${
+              getStore().userId
+            }/favorite-cards/${cardId}`, // Use getStore().userId here
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${getStore().token}`,
+                Authorization: `Bearer ${token}`,
               },
             }
           );
@@ -253,14 +274,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       removeFavoriteCard: async (cardId) => {
         try {
-          const userId = getStore().userId;
+          const { token, userId } = getStore(); // Get both token and userId from the store
+
+          if (!userId) {
+            // If userId is null, synch the session storage token to store to get the userId
+            actions.synTokenFromSessStore();
+          }
+
           const response = await fetch(
-            `http://127.0.0.1:3001/api/users/${userId}/favorite-cards/${cardId}`,
+            `http://127.0.0.1:3001/api/users/${
+              getStore().userId
+            }/favorite-cards/${cardId}`, // Use getStore().userId here
             {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${getStore().token}` // Include the JWT token
+                Authorization: `Bearer ${token}`,
               },
             }
           );

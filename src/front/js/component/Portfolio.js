@@ -17,11 +17,15 @@ const Portfolio = () => {
     <div className="portfolio">
       <h2>Your Favorite Cards</h2>
       <div className="card-container">
-        {favoriteCards.map((card) => (
-          <div className="card" key={card.id}>
-            {/* Render card information here */}
-          </div>
-        ))}
+        {favoriteCards.length === 0 ? (
+          <p>No favorites added yet.</p>
+        ) : (
+          favoriteCards.map((card) => (
+            <div className="card" key={card.id}>
+              {/* Render card information here */}
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

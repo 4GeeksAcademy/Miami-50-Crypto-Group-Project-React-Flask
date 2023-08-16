@@ -1,27 +1,62 @@
-.news-feed  {
-    padding-top: 100px;
-    /* align-items: center;*/
-    text-align: center; 
-    display: column;
-    min-height: 10vh;
-    align-items: center;
-    /* justify-content: center; */
-    
-    border-radius: 25px;
-    padding: 20px;
-    margin-top: 10vh;
-    margin-left: 215px;
-    margin-right: 5px;
-    border: 2px;
-    border-style: double;
-    border-color: darkblue;
-    font-family: Arial, Helvetica, sans-serif;
+.news-feed {
+  padding-top: 100px;
+  text-align: center;
+  min-height: 10vh;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 25px;
+  padding: 20px;
+  margin-top: 10vh;
+  margin-left: 215px;
+  margin-right: 5px;
+  border: 2px double darkblue;
 }
-h3 h2 {
-    font-family: Arial, Helvetica, sans-serif;
-    border: 5px;
-    border-color: darkblue;
-    border-radius: 25px;
-    text-align: center; 
-    display: column;  
+
+.news-feed h2 {
+  margin: 0 auto; /* Center the h2 horizontally */
+}
+
+.news-article {
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.news-article h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.news-article h3 a {
+  color: darkblue;
+  text-decoration: none;
+}
+
+.news-article h3 a:hover {
+  text-decoration: underline;
+}
+
+.news-article h5 {
+  font-size: 16px;
+  color: #666;
+}
+
+.news-item {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px 0;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.news-item:hover {
+  background-color: #f39c12;
+  color: #fff;
+}
+
+.bold-description {
+  font-weight: bold;
 }

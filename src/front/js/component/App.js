@@ -1,6 +1,8 @@
 import { Login } from "./Login";
 import { Register } from "./Register";
 import React, { useState } from "react";
+import Portfolio from "./Portfolio"; // Import the Portfolio component
+
 import "./App.css";
 
 const App = () => {

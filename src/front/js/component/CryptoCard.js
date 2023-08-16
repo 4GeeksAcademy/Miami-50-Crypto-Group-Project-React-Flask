@@ -42,9 +42,13 @@ const CryptoCard = ({ searchTerm }) => {
   }, [searchTerm, store.cryptoData]);
 
   const handleAddFavorite = (uniqueId, name) => {
+    const inputPrice = parseFloat(
+      prompt("Enter a price for this favorite (optional):")
+    );
+
     if (!favoriteCardIds.includes(uniqueId)) {
       actions
-        .addFavoriteCard(uniqueId, name)
+        .addFavoriteCard(uniqueId, inputPrice) // Pass inputPrice here
         .then(() => {
           setFavoriteCardIds([...favoriteCardIds, uniqueId]);
         })

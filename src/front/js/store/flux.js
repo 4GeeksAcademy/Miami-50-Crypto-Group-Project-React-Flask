@@ -256,7 +256,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           throw error;
         }
       },
-      addFavoriteCard: async (cardId) => {
+      addFavoriteCard: async (cardId, inputPrice) => {
         try {
           const token = localStorage.getItem("token");
           const userId = localStorage.getItem("userId");
@@ -267,20 +267,20 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
 
           const requestData = {
-            cardId: cardId,
+            input_price: inputPrice, // Pass the inputPrice here
           };
 
           const response = await fetch(
             `http://127.0.0.1:3001/api/users/${
               getStore().userId
-            }/favorite-cards/${cardId}`, // Use getStore().userId here
+            }/favorite-cards/${cardId}`,
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
               },
-              body: JSON.stringify({ requestData }),
+              body: JSON.stringify(requestData),
             }
           );
 
@@ -291,6 +291,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         } catch (error) {
           console.error("Error adding card to favorites:", error);
+          throw error;
         }
       },
 

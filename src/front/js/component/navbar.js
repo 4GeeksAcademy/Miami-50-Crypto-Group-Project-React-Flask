@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import tartLogo from "/workspaces/Miami-50-Crypto-Group-Project-React-Flask/src/front/img/tart.png";
 import { Context } from "../store/appContext";
 import "./navbar.css";
 
@@ -27,7 +27,7 @@ export const Navbar = ({ setSearchTerm }) => {
     <nav className="navbar">
       <div className="leftSide">
         <Link to="/">
-          <span className="Logo h2">Crypto App</span>
+          <span className="Logo h2">CryptoTart</span>
         </Link>
       </div>
       <div className="rightSide">

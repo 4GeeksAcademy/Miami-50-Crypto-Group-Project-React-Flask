@@ -42,7 +42,7 @@ const NewsFeed = () => {
     fetchNews();
   }, []);
 
-  const initialArticles = news.slice(0, 3);
+  const initialArticles = news.slice(0, 4);
 
   if (error) {
     return <div className="news-feed">{error}</div>;
@@ -54,11 +54,11 @@ const NewsFeed = () => {
 
       {initialArticles.map((item, index) => {
         return (
-          <div key={index}>
+          <div className="news-article news-item" key={index}>
             <h3>
               <a href={item.url}>{item.title}</a>
             </h3>
-            <h5>{item.description}</h5>
+            <h5 className="bold-description">{item.description}</h5>
           </div>
         );
       })}

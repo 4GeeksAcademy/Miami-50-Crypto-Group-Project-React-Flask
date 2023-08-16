@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import "../../styles/card.css";
 
-const Portfolio = () => {
+const Portfolio = ({ favoriteCardIds, handleRemoveFavorite }) => {
   const { store, actions } = useContext(Context);
   const [favoriteCards, setFavoriteCards] = useState([]);
   const history = useNavigate();
@@ -50,10 +50,46 @@ const Portfolio = () => {
                   <span className="">{cryptoData.name}</span>
                 </h3>
                 <p>
+                  Purchase Price:{" "}
+                  <span className="bold-text">
+                    {card.input_price !== null
+                      ? `$${card.input_price.toFixed(2)}`
+                      : "Not set"}
+                  </span>
+                </p>
+                <p>
                   Current Price:{" "}
                   <span className="bold-text">
                     ${cryptoData.current_price.toLocaleString()}
                   </span>
+                </p>
+                <p>
+                  Profit/Loss:{" "}
+                  <span
+                    className={`bold-text ${
+                      card.input_price > cryptoData.current_price
+                        ? "negative"
+                        : "positive"
+                    }`}
+                  >
+                    ${(cryptoData.current_price - card.input_price).toFixed(2)}
+                  </span>{" "}
+                  (
+                  <span
+                    className={`bold-text ${
+                      card.input_price > cryptoData.current_price
+                        ? "negative"
+                        : "positive"
+                    }`}
+                  >
+                    {(
+                      ((cryptoData.current_price - card.input_price) /
+                        card.input_price) *
+                      100
+                    ).toFixed(2)}
+                    %
+                  </span>
+                  )
                 </p>
                 <p>
                   Market Cap:{" "}
@@ -87,7 +123,9 @@ const Portfolio = () => {
                 </p>
                 <p>
                   Last Updated:{" "}
-                  <span className="bold-text">{cryptoData.last_updated}</span>
+                  <span className="bold-text">
+                    {new Date(cryptoData.last_updated).toLocaleString()}
+                  </span>
                 </p>
                 <button
                   className="favorite-button"

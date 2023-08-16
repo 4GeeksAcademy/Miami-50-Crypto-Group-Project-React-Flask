@@ -1,4 +1,17 @@
 /* Preserve your existing styles */
+
+.icon {
+  margin-right: 10px;
+  width: 20px; /* Adjust the width of the icon */
+}
+
+/* Add styles for the link text */
+.link-text {
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .sidebar {
   position: fixed;
   left: 0;

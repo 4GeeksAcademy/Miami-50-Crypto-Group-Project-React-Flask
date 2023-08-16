@@ -5,6 +5,8 @@ import ScrollToTop from "./component/scrollToTop";
 import Home from "./pages/home";
 import { Demo } from "./views/demo";
 import { Single } from "./views/single";
+import { Top10 } from "./pages/top10";
+import { Bottom10 } from "./pages/bottom10";
 import injectContext from "./store/appContext";
 
 import { Footer } from "./component/footer";
@@ -60,6 +62,8 @@ const Layout = () => {
             <Route path="/newsfeed" element={<NewsFeed />} />
             <Route path="/demo" element={<Demo />} />
             <Route path="/single/:theid" element={<Single />} />
+            <Route path="/top" element={<Top10 />} />
+            <Route path="/bottom" element={<Bottom10 />} />
             <Route path="*" element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />
